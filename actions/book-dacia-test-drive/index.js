@@ -1,110 +1,193 @@
 // TODO: Replace MOCK_DATA with a real API call.
 // See the TODO block below the handler for endpoint details.
 const MOCK_DATA = [
-  { name: 'Dacia Bigster', category: 'SUV (C-segment)', body_style: 'SUV', starting_price: 116900, currency: 'RON', seats: 5, boot_capacity_liters: 667, powertrains: ['full hybrid 155', 'mild hybrid 140', 'mild hybrid 130 4x4', 'GPL/LPG'], versions: ['Expression', 'Extreme', 'Journey'], features: ['Dual-zone climate control', '10.1" media display', 'Wireless smartphone replication', 'Arkamys 3D sound', 'YouClip accessory system', 'Hill descent control', 'Level 2 driving assistance'], detail_url: 'https://www.dacia.ro/gama-dacia/bigster.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
-  { name: 'Dacia Duster', category: 'SUV (B-segment)', body_style: 'SUV', starting_price: 98900, currency: 'RON', seats: 5, boot_capacity_liters: 517, powertrains: ['full hybrid 140', 'mild hybrid 130', 'mild hybrid 130 4x4', 'GPL/LPG'], versions: ['Essential', 'Expression', 'Extreme', 'Journey'], features: ['YouClip modular system', '10.1" touchscreen', 'Multiview camera', 'Hill descent control', 'Emergency braking assist', 'Sleep Pack (Extreme)'], detail_url: 'https://www.dacia.ro/gama-dacia/duster.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
-  { name: 'Dacia Jogger', category: 'Family estate (7-seater)', body_style: 'Estate / MPV', starting_price: 82900, currency: 'RON', seats: 7, boot_capacity_liters: 708, powertrains: ['full hybrid 140', 'GPL/LPG', 'petrol TCe'], versions: ['Essential', 'Expression', 'Extreme'], features: ['Up to 7 seats', 'Removable third-row seats', 'Modular boot', 'Roof bars'], detail_url: 'https://www.dacia.ro/gama-dacia/jogger.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
-  { name: 'Dacia Sandero Stepway', category: 'Crossover hatchback', body_style: 'Hatchback (raised)', starting_price: 70900, currency: 'RON', seats: 5, boot_capacity_liters: 328, powertrains: ['mild hybrid', 'GPL/LPG', 'petrol TCe'], versions: ['Expression', 'Extreme'], features: ['Raised ground clearance', 'Roof bars', 'Media Display', 'Emergency braking assist'], detail_url: 'https://www.dacia.ro/gama-dacia/sandero-stepway.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
-  { name: 'Dacia Sandero', category: 'City hatchback', body_style: 'Hatchback', starting_price: 62900, currency: 'RON', seats: 5, boot_capacity_liters: 328, powertrains: ['GPL/LPG', 'petrol TCe'], versions: ['Essential', 'Expression'], features: ['Media Control / Media Display', 'Emergency braking assist', 'Cruise control'], detail_url: 'https://www.dacia.ro/gama-dacia/sandero.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
-  { name: 'Dacia Logan', category: 'Compact sedan', body_style: 'Sedan', starting_price: 65900, currency: 'RON', seats: 5, boot_capacity_liters: 528, powertrains: ['GPL/LPG', 'petrol TCe'], versions: ['Essential', 'Expression'], features: ['Large 528L boot', 'Media Display', 'Rear parking sensors', 'Emergency braking assist'], detail_url: 'https://www.dacia.ro/gama-dacia/logan.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
-  { name: 'Dacia Spring', category: 'Electric city car', body_style: 'Hatchback (EV)', starting_price: 72900, currency: 'RON', seats: 4, boot_capacity_liters: 308, powertrains: ['electric'], versions: ['Expression', 'Extreme'], features: ['100% electric', 'Up to ~225 km WLTP range', 'DC fast charging', 'Compact urban footprint'], detail_url: 'https://www.dacia.ro/gama-dacia/spring.html', configure_url: 'https://www.dacia.ro/configuratorul-nostru.html', is_deal: false },
+    {
+        model_id: 'bigster',
+        name: 'Dacia Bigster',
+        body_style: 'SUV (C-segment)',
+        category: 'SUV',
+        starting_price: 20490,
+        currency: 'EUR',
+        seats: 5,
+        is_deal: true,
+        detail_url: 'https://www.dacia.ro/gama-de-modele-hibride-si-electrice/bigster-suv.html',
+        image_url: 'https://cdn.group.renault.com/dac/ro/gpl/Bigster%20GPL.jpg.ximg.xsmall.jpg/e6921f98ca.jpg',
+    },
+    {
+        model_id: 'duster',
+        name: 'Dacia Duster',
+        body_style: 'SUV (B-segment)',
+        category: 'SUV',
+        starting_price: 17100,
+        currency: 'EUR',
+        seats: 5,
+        is_deal: true,
+        detail_url: 'https://www.dacia.ro/gama-de-modele-hibride-si-electrice/duster-suv.html',
+        image_url: 'https://cdn.group.renault.com/dac/master/dacia-vn/vehicules/duster-p1310/overview/editorial/dacia-duster-p1310-overview-004-1-mobile.jpg.ximg.xsmall.jpg/ba4175c768.jpg',
+    },
+    {
+        model_id: 'logan',
+        name: 'Dacia Logan',
+        body_style: 'Sedan',
+        category: 'Sedan',
+        starting_price: 12741,
+        currency: 'EUR',
+        seats: 5,
+        is_deal: true,
+        detail_url: 'https://www.dacia.ro/gama-dacia/logan-berlina.html',
+        image_url: 'https://cdn.group.renault.com/dac/ro/gpl/Logan%20GPL.jpg.ximg.xsmall.jpg/7d9c1a07d2.jpg',
+    },
+    {
+        model_id: 'sandero-stepway',
+        name: 'Dacia Sandero Stepway',
+        body_style: 'Crossover / raised hatchback',
+        category: 'Crossover',
+        starting_price: 13741,
+        currency: 'EUR',
+        seats: 5,
+        is_deal: true,
+        detail_url: 'https://www.dacia.ro/gama-dacia/sandero-stepway-crossover.html',
+        image_url: 'https://cdn.group.renault.com/dac/ro/bigster-duster-4x4.jpg.ximg.xsmall.jpg/cabdb68ae0.jpg',
+    },
+    {
+        model_id: 'spring',
+        name: 'Dacia Spring',
+        body_style: 'City car (electric)',
+        category: 'City car',
+        starting_price: 13590,
+        currency: 'EUR',
+        seats: 4,
+        is_deal: true,
+        detail_url: 'https://www.dacia.ro/gama-de-modele-hibride-si-electrice/spring-masina-de-oras.html',
+        image_url: 'https://cdn.group.renault.com/dac/master/dacia-vn/vehicules/dacia-bbg/spring-bbg-ph2/overview/editorial/dacia-spring-bbg-ph2-overview-029-portrait.jpg.ximg.xsmall.jpg/ace8f25eb0.jpg',
+    },
+    {
+        model_id: 'jogger',
+        name: 'Dacia Jogger',
+        body_style: 'Estate / 7-seat MPV',
+        category: 'MPV',
+        starting_price: 16650,
+        currency: 'EUR',
+        seats: 7,
+        is_deal: true,
+        detail_url: 'https://www.dacia.ro/gama-dacia/jogger.html',
+        image_url: 'https://cdn.group.renault.com/dac/ro/gpl/Jogger-GPL.jpg.ximg.xsmall.jpg/7292573e4a.jpg',
+    },
 ];
 
-const DEALER_ADDRESS = 'Calea Turzii 247, Cluj-Napoca';
+function findModel(modelName) {
+    const query = modelName.trim().toLowerCase();
+    return MOCK_DATA.find((m) => m.name.toLowerCase() === query)
+        || MOCK_DATA.find((m) => m.name.toLowerCase().includes(query))
+        || MOCK_DATA.find((m) => m.model_id.toLowerCase() === query);
+}
 
-function makeConfirmationId() {
-  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
-  return `TD-${rand}`;
+function buildRequestedSlot(preferred_date, preferred_time_window) {
+    const parts = [];
+    if (preferred_date) parts.push(preferred_date);
+    if (preferred_time_window) parts.push(preferred_time_window);
+    return parts.join(' ');
+}
+
+function buildConfirmationId(dealer_id) {
+    const suffix = Date.now().toString(36).toUpperCase().slice(-6);
+    const prefix = String(dealer_id || 'TD').replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 6) || 'TD';
+    return `TD-${prefix}-${suffix}`;
 }
 
 module.exports = async ({
-  model_id = '',
-  dealer_id = '',
-  preferred_date = '',
-  preferred_time_window = '',
-  customer_name = '',
-  phone = '',
-  email = '',
-  consent_to_contact = false,
+    model_name = '',
+    dealer_id = '',
+    preferred_date = '',
+    preferred_time_window = '',
+    full_name = '',
+    phone = '',
+    email = '',
+    consent_to_contact = false,
 } = {}) => {
-  if (!model_id || typeof model_id !== 'string' || !model_id.trim()) {
-    return {
-      content: [{ type: 'text', text: 'Please provide a model_id — which Dacia model would you like to test drive?' }],
-      structuredContent: {},
-    };
-  }
-  if (!dealer_id || typeof dealer_id !== 'string' || !dealer_id.trim()) {
-    return {
-      content: [{ type: 'text', text: 'Please provide a dealer_id — which Dacia sales agent or location should handle the request?' }],
-      structuredContent: {},
-    };
-  }
-  if (!customer_name || typeof customer_name !== 'string' || !customer_name.trim()) {
-    return {
-      content: [{ type: 'text', text: 'Please provide customer_name so the dealer knows who to contact.' }],
-      structuredContent: {},
-    };
-  }
-  if (!phone || typeof phone !== 'string' || !phone.trim()) {
-    return {
-      content: [{ type: 'text', text: 'Please provide a phone number for dealer follow-up.' }],
-      structuredContent: {},
-    };
-  }
-  if (consent_to_contact !== true) {
-    return {
-      content: [{ type: 'text', text: 'Consent to contact is required before a test-drive request can be submitted.' }],
-      structuredContent: {},
-    };
-  }
+    if (!model_name || typeof model_name !== 'string' || !model_name.trim()) {
+        return {
+            content: [{ type: 'text', text: 'Please provide a model_name for the Dacia model you want to test drive.' }],
+            structuredContent: {},
+        };
+    }
+    if (!dealer_id || typeof dealer_id !== 'string' || !dealer_id.trim()) {
+        return {
+            content: [{ type: 'text', text: 'Please provide a dealer_id for the dealership where you want the test drive.' }],
+            structuredContent: {},
+        };
+    }
+    if (!preferred_date || typeof preferred_date !== 'string' || !preferred_date.trim()) {
+        return {
+            content: [{ type: 'text', text: 'Please provide a preferred_date (ISO date) for the test drive.' }],
+            structuredContent: {},
+        };
+    }
+    if (!full_name || typeof full_name !== 'string' || !full_name.trim()) {
+        return {
+            content: [{ type: 'text', text: 'Please provide your full_name so the dealership can contact you.' }],
+            structuredContent: {},
+        };
+    }
+    if (!phone || typeof phone !== 'string' || !phone.trim()) {
+        return {
+            content: [{ type: 'text', text: 'Please provide a contact phone number for the test-drive request.' }],
+            structuredContent: {},
+        };
+    }
+    if (consent_to_contact !== true) {
+        return {
+            content: [{ type: 'text', text: 'The dealership needs your consent to contact you (consent_to_contact) before we can submit the request.' }],
+            structuredContent: {},
+        };
+    }
 
-  const query = model_id.trim().toLowerCase();
-  const model = MOCK_DATA.find((m) => m.name.toLowerCase() === query)
-    || MOCK_DATA.find((m) => m.name.toLowerCase().includes(query));
-  const modelName = model ? model.name : model_id.trim();
-  const dealerName = dealer_id.trim();
+    const model = findModel(model_name);
+    const resolvedModelName = model ? model.name : model_name.trim();
+    const dealerName = `Dacia Dealer ${dealer_id.trim()}`;
+    const requestedSlot = buildRequestedSlot(preferred_date.trim(), preferred_time_window.trim());
+    const confirmationId = buildConfirmationId(dealer_id);
 
-  // TODO: submit the request to the real dealer/CRM API here (see TODO block below).
-  const confirmationId = makeConfirmationId();
+    // TODO: submit to the real dealership booking API here (see TODO block below).
+    const status = 'pending confirmation';
+    const message = `Your test-drive request for the ${resolvedModelName} has been submitted to ${dealerName}`
+        + `${requestedSlot ? ` for ${requestedSlot}` : ''}. `
+        + 'The dealership will follow up to confirm the final appointment.';
 
-  const structuredContent = {
-    confirmation_id: confirmationId,
-    status: 'awaiting dealer confirmation',
-    message: `Am înregistrat cererea de test drive pentru ${modelName} la ${dealerName}. Agentul Dacia trebuie să confirme disponibilitatea vehiculului și a programării înainte ca data sau modelul solicitat să fie garantate.`,
-    model_name: modelName,
-    dealer_name: dealerName,
-    dealer_address: DEALER_ADDRESS,
-    requested_date: preferred_date,
-    requested_time_window: preferred_time_window,
-    confirmation_required: true,
-  };
-
-  const when = [preferred_date, preferred_time_window].filter(Boolean).join(' ');
-  const summary = `Test-drive request for ${modelName} submitted to ${dealerName}${when ? ` for ${when}` : ''} (confirmation #${confirmationId}). The dealer must confirm vehicle and appointment availability before the requested date or model is guaranteed.`;
-
-  return {
-    content: [{ type: 'text', text: summary }],
-    structuredContent,
-  };
+    return {
+        content: [{ type: 'text', text: `Test-drive request submitted for the ${resolvedModelName} — confirmation #${confirmationId} (${status}).` }],
+        structuredContent: {
+            confirmation_id: confirmationId,
+            status,
+            message,
+            model_name: resolvedModelName,
+            dealer_name: dealerName,
+            requested_slot: requestedSlot,
+        },
+    };
 };
 
 /*
- * TODO: Replace the in-memory confirmation with a real dealer/CRM API call.
+ * TODO: Replace the mock booking logic with a real API call.
  *
  * Suggested endpoint pattern (update based on actual site API):
- *   POST ${process.env.API_BASE_URL}/test-drives
- *   body: { model_id, dealer_id, preferred_date, preferred_time_window,
- *           customer_name, phone, email, consent_to_contact }
+ *   POST ${process.env.API_BASE_URL}/test-drive-requests
+ *   body: { model_name, dealer_id, preferred_date, preferred_time_window,
+ *           full_name, phone, email, consent_to_contact }
  *
  * Environment variables to configure:
  *   API_BASE_URL   Base URL of the website's API
  *   API_KEY        API key if required (add to .env and app.config.yaml)
  *
  * Example fetch:
- *   const res = await fetch(`${process.env.API_BASE_URL}/test-drives`, {
+ *   const res = await fetch(`${process.env.API_BASE_URL}/test-drive-requests`, {
  *     method: 'POST',
- *     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.API_KEY}` },
- *     body: JSON.stringify({ model_id, dealer_id, preferred_date, preferred_time_window, customer_name, phone, email, consent_to_contact }),
+ *     headers: {
+ *       'Content-Type': 'application/json',
+ *       'Authorization': `Bearer ${process.env.API_KEY}`,
+ *     },
+ *     body: JSON.stringify({ model_name, dealer_id, preferred_date,
+ *       preferred_time_window, full_name, phone, email, consent_to_contact }),
  *   })
  *   if (!res.ok) throw new Error(`API error: ${res.status}`)
  *   return await res.json()
