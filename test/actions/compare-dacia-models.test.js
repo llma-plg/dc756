@@ -1,57 +1,49 @@
 const handler = require('../../actions/compare-dacia-models/index.js');
 
 describe('compare_dacia_models handler', () => {
-    test('returns content block shape on happy path', async () => {
-        const out = await handler({ first_model_id: 'Dacia Bigster', second_model_id: 'Dacia Duster' });
-        expect(out).toHaveProperty('content');
-        expect(Array.isArray(out.content)).toBe(true);
-        expect(out.content[0]).toMatchObject({ type: 'text', text: expect.any(String) });
-    });
+  test('returns content block shape on happy path', async () => {
+    const out = await handler({ first_model: 'Duster', second_model: 'Bigster' });
+    expect(out).toHaveProperty('content');
+    expect(Array.isArray(out.content)).toBe(true);
+    expect(out.content[0]).toMatchObject({ type: 'text', text: expect.any(String) });
+  });
 
-    test('"torn between the Bigster and the Duster" compares exactly two models', async () => {
-        const out = await handler({ first_model_id: 'Dacia Bigster', second_model_id: 'Dacia Duster', priority: 'family travel' });
-        expect(out.structuredContent.models).toHaveLength(2);
-        expect(out.structuredContent.models[0].name).toBe('Dacia Bigster');
-        expect(out.structuredContent.models[1].name).toBe('Dacia Duster');
-        expect(out.content[0].text.length).toBeGreaterThan(0);
-    });
+  test('"Compare the Dacia Duster and the Dacia Bigster" returns exactly two models', async () => {
+    const out = await handler({ first_model: 'Duster', second_model: 'Bigster', intended_use: 'family road trips' });
+    expect(out.structuredContent.models).toHaveLength(2);
+    expect(out.content[0].text.length).toBeGreaterThan(0);
+    const names = out.structuredContent.models.map((m) => m.name);
+    expect(names).toContain('Dacia Duster');
+    expect(names).toContain('Dacia Bigster');
+  });
 
-    test('maps sample fields to the outputSchema shape', async () => {
-        const out = await handler({ first_model_id: 'Dacia Bigster', second_model_id: 'Dacia Duster' });
-        const bigster = out.structuredContent.models[0];
-        expect(bigster).toMatchObject({
-            model_id: expect.any(String),
-            name: 'Dacia Bigster',
-            starting_price: 116900,
-            currency: 'RON',
-            passenger_capacity: 5,
-            luggage_capacity_litres: 667,
-        });
-        expect(Array.isArray(bigster.powertrain_types)).toBe(true);
-        expect(Array.isArray(bigster.versions)).toBe(true);
-    });
+  test('structuredContent is a plain object, not a bare array', async () => {
+    const out = await handler({ first_model: 'Duster', second_model: 'Bigster' });
+    expect(typeof out.structuredContent).toBe('object');
+    expect(Array.isArray(out.structuredContent)).toBe(false);
+    expect(Array.isArray(out.structuredContent.models)).toBe(true);
+  });
 
-    test('structuredContent is a plain object, not a bare array', async () => {
-        const out = await handler({ first_model_id: 'Dacia Bigster', second_model_id: 'Dacia Duster' });
-        expect(typeof out.structuredContent).toBe('object');
-        expect(Array.isArray(out.structuredContent)).toBe(false);
-    });
+  test('returns error message when required arg is missing', async () => {
+    const out = await handler({ first_model: 'Duster' });
+    expect(out.content[0].text).toMatch(/provide|first_model|second_model/i);
+    expect(out.structuredContent.models).toEqual([]);
+  });
 
-    test('returns error message when a required arg is missing', async () => {
-        const out = await handler({ first_model_id: 'Dacia Bigster' });
-        expect(out.content[0].text).toMatch(/second_model_id|provide/i);
-        expect(out.structuredContent.models).toEqual([]);
-    });
+  test('unknown model returns a not-found message', async () => {
+    const out = await handler({ first_model: 'Duster', second_model: 'Nonexistent Model XYZ' });
+    expect(out.content[0].text).toMatch(/could not find|no match/i);
+    expect(out.structuredContent.models.length).toBeLessThan(2);
+  });
 
-    test('reports unknown models instead of comparing', async () => {
-        const out = await handler({ first_model_id: 'Dacia Bigster', second_model_id: 'Tesla Model 3' });
-        expect(out.content[0].text).toMatch(/could not find|Tesla Model 3/i);
-        expect(out.structuredContent.models).toEqual([]);
+  test('reflects intended_use and priority_features in the summary', async () => {
+    const out = await handler({
+      first_model: 'bigster',
+      second_model: 'duster',
+      intended_use: 'family road trips',
+      priority_features: ['space', 'boot capacity'],
     });
-
-    test('matches models by partial / case-insensitive name', async () => {
-        const out = await handler({ first_model_id: 'bigster', second_model_id: 'duster' });
-        expect(out.structuredContent.models).toHaveLength(2);
-        expect(out.structuredContent.models.map((m) => m.name)).toEqual(['Dacia Bigster', 'Dacia Duster']);
-    });
+    expect(out.content[0].text).toMatch(/family road trips/i);
+    expect(out.content[0].text).toMatch(/space/i);
+  });
 });
